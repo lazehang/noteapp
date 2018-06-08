@@ -14,10 +14,8 @@ const config = require('./config.js')[process.env.NODE_ENV || 'development'];
 const knexConfig = require('./knexfile')[process.env.NODE_ENV || 'development'];
 const knex = require('knex')(knexConfig);
 
-
 app.engine('handlebars', hb({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
-
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
