@@ -29,8 +29,11 @@ app.use(basicAuth({
 }));
 
 let noteService = new NoteService(knex);
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/resume/index.html');
+})
 
-app.use('/', function(req, res, next) {
+app.use('/notes', function(req, res, next) {
     return knex("users")
         .where('username', req.auth.user)
         .select('id')
@@ -41,7 +44,7 @@ app.use('/', function(req, res, next) {
         });
 });
 
-app.get('/', function(req, res) {
+app.get('/notes', function(req, res) {
     noteService.list(req.auth.userid).then(function(notes) {
         res.render('index', {
             user: req.auth.user,
