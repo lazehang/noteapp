@@ -12,11 +12,15 @@
         "express-basic-auth": "^1.1.4",
         "express-handlebars": "^3.0.0",
         "handlebars": "^4.0.11",
-        "knex": "^0.14.6",
-        "pg": "^7.4.1"
+        "knex": "^0.95.15",
+        "pg": "^8.7.1"
     },
     "scripts": {
         "test": "NODE_ENV=test jasmine",
-        "dev": "node index.js"
+        "dev": "nodemon index.js",
+        "migrate-seed": "npx knex migrate:latest && npx knex seed:run"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
     }
 }

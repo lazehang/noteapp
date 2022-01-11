@@ -20,9 +20,9 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/resume/index.html');
-})
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/public/resume/index.html');
+// })
 let noteService = new NoteService(knex);
 app.use(basicAuth({
     authorizer: new Auth(knex),
@@ -30,7 +30,7 @@ app.use(basicAuth({
     challenge: true,
     realm: 'Note taking app'
 }));
-app.use('/notes', function(req, res, next) {
+app.use('/', function(req, res, next) {
     return knex("users")
         .where('username', req.auth.user)
         .select('id')
@@ -41,7 +41,7 @@ app.use('/notes', function(req, res, next) {
         });
 });
 
-app.get('/notes', function(req, res) {
+app.get('/', function(req, res) {
     noteService.list(req.auth.userid).then(function(notes) {
         res.render('index', {
             user: req.auth.user,
